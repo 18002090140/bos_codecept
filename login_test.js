@@ -19,22 +19,22 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
 
     //I.gotohome();
     I.amOnPage('http://120.78.125.187:8888/#/ModuleList');
-    pause();
-    I.click("新增测试数据",qclocator.rowWithText("测试"));
-    pause();
+
+    I.click("新增测试数据",locator.rowWithText("测试"));
+  
     I.see("测数据添加");
     
-    I.seeExactly("测试");//,locator.contentInFieldWithLabel("所属领域模型"));
+    I.see("测试");//,locator.contentInFieldWithLabel("所属领域模型"));
     pause();
-    I.fillField(locator.inputInFieldWithLabel("名称"),data.test1.name);
+    I.fillField(locator.inputInFieldWithLabel("名称"),"test9");
     
-    //I.fillField(locator.inputWithLabel("name"),data.testdata1.jsondata.name); 
+    
     //I.fillField("模型数据",默认？或者弹出选择数据)
     //I.fillField("jsondata",JSON.stringify(data.jsondata))
     
     I.click("保存");
-    
     I.seeInPopup("保存成功");
+    pause();
     I.amOnPage('http://120.78.125.187:8888/#/TestDataList');
     I.see(data.test1.name);
     I.click('详情',locator.rowWithText(data.name));
@@ -42,11 +42,6 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
    
 });
 
-
-Scenario("tesg github",(I)=>{
-    I.amOnPage('https://github.com');
-    I.see('GitHub');
-})
 /*
 
 Scenario("假定测试数据已经好了，当我在命令行中输入"
