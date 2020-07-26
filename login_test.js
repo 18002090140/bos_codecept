@@ -18,6 +18,7 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
     //and.I.click("详情",Locator.getRow("adsfasdf")).
 
     //I.gotohome();
+<<<<<<< HEAD
     // I.amOnPage('http://localhost:8080/#/ModuleList');
     // pause();
     // I.click("新增测试数据",{xpath: "//table//div[text() = '领域模型']"});
@@ -52,6 +53,32 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
 //     I.amOnPage('https://github.com');
 //     I.see('GitHub');
 // })
+=======
+    I.amOnPage('http://120.78.125.187:8888/#/ModuleList');
+
+    I.click("新增测试数据",locator.rowWithText("测试"));
+  
+    I.see("测数据添加");
+    
+    I.see("测试");//,locator.contentInFieldWithLabel("所属领域模型"));
+    pause();
+    I.fillField(locator.inputInFieldWithLabel("名称"),"test9");
+    
+    
+    //I.fillField("模型数据",默认？或者弹出选择数据)
+    //I.fillField("jsondata",JSON.stringify(data.jsondata))
+    
+    I.click("保存");
+    I.seeInPopup("保存成功");
+    pause();
+    I.amOnPage('http://120.78.125.187:8888/#/TestDataList');
+    I.see(data.test1.name);
+    I.click('详情',locator.rowWithText(data.name));
+    I.seeTextEquals(JSON.stringify(data.jsondata));
+   
+});
+
+>>>>>>> a0c3af4269013095463bf2b961295463b184610e
 /*
 
 Scenario("假定测试数据已经好了，当我在命令行中输入"
