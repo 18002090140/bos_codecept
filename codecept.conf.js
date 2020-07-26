@@ -4,7 +4,11 @@ exports.config = {
     Puppeteer: {
       url: 'http://localhost',
       show: true,
-      windowSize: '1200x900'
+      windowSize: '1920x1080',
+      chrome: {
+        executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+      }
+      
     }
   },
   include: {
