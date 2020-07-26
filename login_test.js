@@ -18,19 +18,12 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
     //and.I.click("详情",Locator.getRow("adsfasdf")).
 
     //I.gotohome();
-    // I.amOnPage('http://localhost:8080/#/ModuleList');
-    // pause();
-    // I.click("新增测试数据",{xpath: "//table//div[text() = '领域模型']"});
-    // pause();
-    // I.see("测试数据添加");
-    
-    // I.seeExactly("领域模型");//,locator.contentInFieldWithLabel("所属领域模型"));
-    // pause();
+    I.amOnPage('http://120.78.125.187:8888/#/ModuleList');
+
+    I.click("新增测试数据","//table//div[text() = '领域模型']/ancestor::tr");
+    I.see("测试数据添加");
     I.amOnPage('http://120.78.125.187:8888/#/TestData/DutuEOiLSv23vSG8d97gEQ_DM');
     I.fillField("//section/section/main/div/div[2]/div[2]/div/div[1]/input",data.test1.name);
-    // I.fillField("//*[@id='jsoneditor']/div/div[2]/div/div[2]/div/div[3]",'datajson')
-    //*[@id="jsoneditor"]/div/div[2]/div/div[2]/div/div[3]
-    // JSON.stringify(data.jsondata)
     I.click('保存')
     I.see("保存成功");
     //I.fillField(locator.inputWithLabel("name"),data.testdata1.jsondata.name); 
