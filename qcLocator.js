@@ -6,14 +6,28 @@
  * @param text 
  */
 function rowWithText(text) {
-	return "//table//div[string() = '"+text+"' ]/ancestor::tr"
-}
-
-function inputWithLabel(propertyLabel){
-	return `//SPAN[text()="${propertyLabel}"]/ancestor-or-self::*[contains(@class,'define-input-container')]//input[@type='text']`;
+	return `//*[text()="${text}"]/ancestor-or-self::tr[@class="el-table__row"]`;
 	
 }
 
+function inputWithLabel(propertyLabel){
+	const prefix=`//div[@data-label="${propertyLabel}"]`;
+	//TODO 有待扩展到其他输入框
+	return "("+prefix+"//input[@type='text']" +" | "+prefix+"//textarea"+")";
+}
+
+function entitySelectorWithLabel(propertyLabel){
+	return `//div[@data-label="${propertyLabel}"]//i[contains(@class,'icon-sousuo')]`;
+}
+
+function popupWindowWithTitle(propertyLabel){
+	return `//div[@data-title="${propertyLabel}"]`;
+}
+
+function fieldWithLabel(propertyLabel){
+	return `//div[@data-label="${propertyLabel}"]`;
+}
+
 module.exports = {
-	rowWithText,inputWithLabel
+	rowWithText,inputWithLabel,entitySelectorWithLabel,popupWindowWithTitle,fieldWithLabel
 }
