@@ -1,7 +1,6 @@
 let locator = require('./qclocator')
 
-let data= require('./data');
-
+let data= require('./Data/checkData.js');
 Feature('测试数据web化');
 
 Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘，"
@@ -17,27 +16,29 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
     //given I.amOnPage('https://baidu.com/');
     //and.I.click("详情",Locator.getRow("adsfasdf")).
 
-    //I.gotohome();
-    I.amOnPage('http://120.78.125.187:8888/#/ModuleList');
 
-    I.click("新增测试数据","//table//div[text() = '领域模型']/ancestor::tr");
-    I.see("测试数据添加");
-    I.amOnPage('http://120.78.125.187:8888/#/TestData/DutuEOiLSv23vSG8d97gEQ_DM');
-    I.fillField("//section/section/main/div/div[2]/div[2]/div/div[1]/input",data.test1.name);
-    I.click('保存')
-    I.see("保存成功");
-    //I.fillField(locator.inputWithLabel("name"),data.testdata1.jsondata.name); 
-    //I.fillField("模型数据",默认？或者弹出选择数据)
-    //I.fillField("jsondata",JSON.stringify(data.jsondata))
-    
-    // I.click("保存");
-    
-    // I.seeInPopup("保存成功");
-    // I.amOnPage('http://120.78.125.187:8888/#/TestDataList');
-    // I.see(data.test1.name);
-    // I.click('详情',locator.rowWithText(data.name));
-    // I.seeTextEquals(JSON.stringify(data.jsondata));
-   
+    // I.amOnPage('http://120.78.125.187:8888/#/ModuleList');
+    // I.click("新增测试数据","//table//div[text() = '领域模型']/ancestor::tr");
+    // I.see("测试数据添加");
+    // I.amOnPage('http://120.78.125.187:8888/#/TestData/DutuEOiLSv23vSG8d97gEQ_DM');
+    // I.fillField("//section/section/main/div/div[2]/div[2]/div/div[1]/input",data.test1.name);
+    // I.click('保存')
+    // I.see("保存成功");
+
+    I.amOnPage('http://localhost:8080/#/checkStandardList')
+    I.click('验收标准列表')
+    I.see("新增验收标准");
+    I.click('新增验收标准')
+    I.fillField("//input[@class='input']",data.name)[0]
+    I.click("//i[@class='iconfont icon-sousuo']")[0]
+    I.click(`//table//div[text() = 'asda']/ancestor::tr`)
+    I.click('确定')
+    I.fillField("//section/section/main/div/div[2]/div[1]/div[3]/textarea",'assadad')
+    I.click("//section/section/main/div/div[2]/div[1]/div[4]/div[2]/i[2]")
+    I.click("//section/section/main/div/div[2]/div[1]/div[4]/div[4]/div/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[2]/td[1]/div/label/span/span")
+    I.click("//button[@class='button primary default']")
+    I.click("//button[@class='button simple default']")
+    pause();
 });
 
 
