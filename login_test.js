@@ -1,13 +1,13 @@
 let locator = require('./qclocator')
 
 let data= require('./Data/checkData.js');
+let checkstandard=require("./Data/C02_1.js");
+const qclocator = require('./qclocator');
 Feature('测试数据web化');
 
-Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘，"
-+"和对应的装备保养单JSON字符串，单击确定按钮后，我会在测试数据列表界面看到，"
-+"领域模型为'装备保养单',名称为'byd-测试1'的数据条目，"
-+"点开该条数据的详情后，能拿到该测试数据的值，该值应与输入的JSON字符串相同", (I) => {
+Scenario(checkstandard.represent, (I) => {
     
+
     //给定.....
     //当我填写是是是是，
     //并且 提交后
@@ -25,12 +25,25 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
     // I.click('保存')
     // I.see("保存成功");
 
-    I.amOnPage('http://localhost:8080/#/checkStandardList')
-    I.click('验收标准列表')
+    I.amOnPage('http://192.168.137.1:8080/#/checkStandardList')
     I.see("新增验收标准");
     I.click('新增验收标准')
-    I.fillField("//input[@class='input']",data.name)[0]
-    I.click("//i[@class='iconfont icon-sousuo']")[0]
+    I.fillField(qclocator.inputWithLabel("名称"),"新增验收标准");
+    I.fillField(qclocator.inputWithLabel("编号"),"CO2_2");
+    pause();
+    I.click(qclocator.entitySelectorWithLabel("用户故事"));
+    I.see("用户故事选择");
+
+    
+
+
+    I.click(qclocator.rowWithText("C01"),qclocator.popupWindowWithTitle("用户故事选择"));
+    I.click("确定",qclocator.popupWindowWithTitle("用户故事选择"));
+    I.see("用户故事2",qclocator.inputAreaWithLabel("名称"));
+    I.fillField(`给定验收标准新增页面,我输入Name为'测试用例1',并且在对应的表单填入验收标准内容S,点击确定,我会跳转到验收标准列表界面，,我会看见一条新的名为'测试用例1'的数据条目`,qclocator.inputWithPlaceholder("请输入内容"))
+  
+
+    /*I.click("//i[@class='iconfont icon-sousuo']")[0]
     I.click(`//table//div[text() = 'asda']/ancestor::tr`)
     I.click('确定')
     I.fillField("//section/section/main/div/div[2]/div[1]/div[3]/textarea",'assadad')
@@ -39,6 +52,7 @@ Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘�
     I.click("//button[@class='button primary default']")
     I.click("//button[@class='button simple default']")
     pause();
+    */
 });
 
 
