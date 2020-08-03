@@ -2,11 +2,10 @@ let locator = require('./qclocator')
 
 let data=require("./Data/C02_1.js");
 const qclocator = require('./qclocator');
-//const baseurl="http://192.168.1.39:8080";
-const baseurl="http://192.168.137.1:8080";
+const baseurl="http://120.78.125.187:8888";
 Feature('测试数据web化');
 
-Scenario(checkstandard.represent, (I) => {
+Scenario(data.represent, (I) => {
     var t01=data.testDataSet.T01;
 
     I.amOnPage(baseurl+'/#/checkStandardList')
@@ -16,8 +15,9 @@ Scenario(checkstandard.represent, (I) => {
 
     I.click(qclocator.entitySelectorWithLabel("用户故事"));
 
-    I.click(qclocator.rowWithText("eqe"),qclocator.popupWindowWithTitle("用户故事选择"));
+    I.click(qclocator.rowWithText(data.UserStory.name),qclocator.popupWindowWithTitle("用户故事选择"));
     I.click("确定",qclocator.popupWindowWithTitle("用户故事选择"));  
+    
     /**
     I.in(qclocator.popupWindowWithTitle("用户故事选择"),(I)=>{
         I.click(qclocator.rowWithText("C01"));
@@ -25,16 +25,16 @@ Scenario(checkstandard.represent, (I) => {
     })
      */
 
-    I.seeInField(qclocator.inputWithLabel("用户故事"),"qweqe");
+    I.seeInField(qclocator.inputWithLabel("用户故事"),data.UserStory.name);
     I.fillField(qclocator.inputWithLabel("内容"),t01.represent)
     I.click('提交')
    
     I.click("详情",qclocator.rowWithText(t01.name));
-    I.seeInField(qclocator.inputWithLabel("用户故事"),"qweqe");
+    I.seeInField(qclocator.inputWithLabel("用户故事"),data.UserStory.name);
     I.click("返回");
     I.click("删除",qclocator.rowWithText(t01.name));
     I.click('确定','//div[@aria-label="提示"]');
-    I.dontSee(t01.name);
+    I.dontSee(t01.name,"//*[@class='container']");
 });
 
 
