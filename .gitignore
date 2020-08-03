@@ -3,6 +3,5 @@
 node_modules
 *.swap
 /output
-codecept.conf.js
 /Data
 
