@@ -12,6 +12,10 @@
 ## XPath 语法
   https://www.w3school.com.cn/xpath/xpath_syntax.asp
 
+## 其他连接
+### XPath中的text()和string()区别 https://blog.csdn.net/jiangchao858/article/details/63314426
+### Xpath cheatsheet https://devhints.io/xpath  
+
 ## 基本操作
 
 ```

@@ -1,44 +1,40 @@
 let locator = require('./qclocator')
 
-let data= require('./Data/checkData.js');
+let data=require("./Data/C02_1.js");
+const qclocator = require('./qclocator');
+const baseurl="http://120.78.125.187:8888";
 Feature('测试数据web化');
 
-Scenario("给定新增测试数据界面，当我输入name为‘byd-测试1‘，"
-+"和对应的装备保养单JSON字符串，单击确定按钮后，我会在测试数据列表界面看到，"
-+"领域模型为'装备保养单',名称为'byd-测试1'的数据条目，"
-+"点开该条数据的详情后，能拿到该测试数据的值，该值应与输入的JSON字符串相同", (I) => {
-    
-    //给定.....
-    //当我填写是是是是，
-    //并且 提交后
-    //那么 ....
-    //1.当我在装备出入库模型界面，点击装备类型时，那么界面能跳转到装备类型的模型界面。
-    //given I.amOnPage('https://baidu.com/');
-    //and.I.click("详情",Locator.getRow("adsfasdf")).
+Scenario(data.represent, (I) => {
+    var t01=data.testDataSet.T01;
 
-
-    // I.amOnPage('http://120.78.125.187:8888/#/ModuleList');
-    // I.click("新增测试数据","//table//div[text() = '领域模型']/ancestor::tr");
-    // I.see("测试数据添加");
-    // I.amOnPage('http://120.78.125.187:8888/#/TestData/DutuEOiLSv23vSG8d97gEQ_DM');
-    // I.fillField("//section/section/main/div/div[2]/div[2]/div/div[1]/input",data.test1.name);
-    // I.click('保存')
-    // I.see("保存成功");
-
-    I.amOnPage('http://localhost:8080/#/checkStandardList')
-    I.click('验收标准列表')
-    I.see("新增验收标准");
+    I.amOnPage(baseurl+'/#/checkStandardList')
     I.click('新增验收标准')
-    I.fillField("//input[@class='input']",data.name)[0]
-    I.click("//i[@class='iconfont icon-sousuo']")[0]
-    I.click(`//table//div[text() = 'asda']/ancestor::tr`)
-    I.click('确定')
-    I.fillField("//section/section/main/div/div[2]/div[1]/div[3]/textarea",'assadad')
-    I.click("//section/section/main/div/div[2]/div[1]/div[4]/div[2]/i[2]")
-    I.click("//section/section/main/div/div[2]/div[1]/div[4]/div[4]/div/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[2]/td[1]/div/label/span/span")
-    I.click("//button[@class='button primary default']")
-    I.click("//button[@class='button simple default']")
-    pause();
+    I.fillField(qclocator.inputWithLabel("名称"),t01.name);
+    I.fillField(qclocator.inputWithLabel("编号"),t01.number);
+
+    I.click(qclocator.entitySelectorWithLabel("用户故事"));
+
+    I.click(qclocator.rowWithText(data.UserStory.name),qclocator.popupWindowWithTitle("用户故事选择"));
+    I.click("确定",qclocator.popupWindowWithTitle("用户故事选择"));  
+    
+    /**
+    I.in(qclocator.popupWindowWithTitle("用户故事选择"),(I)=>{
+        I.click(qclocator.rowWithText("C01"));
+        I.fillField("确定");
+    })
+     */
+
+    I.seeInField(qclocator.inputWithLabel("用户故事"),data.UserStory.name);
+    I.fillField(qclocator.inputWithLabel("内容"),t01.represent)
+    I.click('提交')
+   
+    I.click("详情",qclocator.rowWithText(t01.name));
+    I.seeInField(qclocator.inputWithLabel("用户故事"),data.UserStory.name);
+    I.click("返回");
+    I.click("删除",qclocator.rowWithText(t01.name));
+    I.click('确定','//div[@aria-label="提示"]');
+    I.dontSee(t01.name,"//*[@class='container']");
 });
 
 
