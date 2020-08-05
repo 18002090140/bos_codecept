@@ -2,7 +2,9 @@ let locator = require('./qclocator')
 
 let data=require("./Data/S01/U01.js");
 const qclocator = require('./qclocator');
-const baseurl="http://120.78.125.187:8888";
+const localurl = "http://localhost:8080/"
+const serverurl = "http://120.78.125.187:8888"
+const baseurl= serverurl;
 Feature('测试数据web化');
 
 Scenario(data.C02.represent, (I) => {
