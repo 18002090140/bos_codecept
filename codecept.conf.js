@@ -1,3 +1,7 @@
+exports.bossupport={
+  backendurl:"http://192.168.1.139"
+};
+
 exports.config = {
     output: './output',
     helpers: {

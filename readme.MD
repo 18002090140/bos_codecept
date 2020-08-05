@@ -12,3 +12,8 @@
  - https://www.w3school.com.cn/xpath/xpath_intro.asp
  - 参考xpath使用注意事项.md
 
+# 准备测试数据及模板
+- cnpm run  prepare S02
+- TODO 读取S02参数
+- 删除文件夹/生成文件夹和文件，数据变换，
+- 
