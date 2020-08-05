@@ -1,12 +1,13 @@
 let locator = require('./qclocator')
 
-let data=require("./Data/C02_1.js");
+let data=require("./Data/S01/U01.js");
 const qclocator = require('./qclocator');
 const baseurl="http://120.78.125.187:8888";
 Feature('测试数据web化');
 
-Scenario(data.represent, (I) => {
-    var t01=data.testDataSet.T01;
+Scenario(data.C02.represent, (I) => {
+    var t01=data.C02.testdata.T01;
+
 
     I.amOnPage(baseurl+'/#/checkStandardList')
     I.click('新增验收标准')
