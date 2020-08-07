@@ -12,10 +12,13 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
+    "babel-core": "^6.26.3",
     "lodash": "^4.17.19",
     "testpro-project": "^1.0.61"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "codeceptjs": "^2.6.6",
     "puppeteer": "^5.2.0"
   }
