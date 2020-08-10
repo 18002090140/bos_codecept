@@ -7,130 +7,102 @@ const path = require("path");
 const { dir } = require("console");
 const { lastIndexOf } = require("lodash");
 // import bossupport from "./codecept.conf";
-let testUrl = "http://172.22.161.90:8030/bos/test-data/export"
-let allUrl = "http://172.22.161.90:8030/bos/test-data/export/data/007/0"
 // let url = bossupport.backendurl + '/data/007/0'
+let testUrl = "http://172.22.161.90:8030/bos/check-standard/export/"
+let allUrl = "http://172.22.161.90:8030/bos/check-standard/export/asd_123"
 const arg = process.argv
-const argUrl = `${testUrl}/${arg[2]}/${arg[3]}/${arg[4]}`
+const argUrl = `${testUrl}/${arg[2]}`
+let sprintNo
+let userStoryNo
+initName(arg[2])
 axios.get(argUrl, {})
   .then(function (res) {
-    var sprintno = "S01";
     //var criteriaArr=_.
     if (res.status == 200) {
-      console.log(`网络请求成功:${res.status}`);
-      //生成文件夹与文件
-      let data = JSON.stringify(res.data, "", "\t")
-      initDir("Data1","Data1/007.json",data)
-      
-      //JS
-      // let jsData = JSON.parse(JSON.stringify(res.data))
-      // writeFile('007.js', data)
-      // console.log(jsData) 
+      log(`网络请求成功:${res.status}`);
+      // log(Object.prototype.toString.call(res.data))
+      const response = res.data
+      if(typeof(userStoryNo)=="undefined"){
+        // S07
+        makeDir(`Data1/${sprintNo}`)
+      }else{
+        // S07_U07
+        makeDir(`Data1/${sprintNo}`)
+        const data =JSON.stringify(response[0], "", "\t")
+        writeFile(`Data1/${sprintNo}/${userStoryNo}.js`,`module.exports =${data}`)
+        // 每个U单独一个文件夹 文件夹下为单个测试用例
+        // makeDir(`Data1/${sprintNo}/${userStoryNo}`)
+        // for(let i=0;i<response.length;i++){
+        //   writeFile(`Data1/${sprintNo}/${userStoryNo}/${response[i].number}.js`,JSON.stringify(response[i], "", "\t"))
+        // } 
+      }
+      // let jsData = JSON.parse(JSON.stringify(res.data, "", "\t"))
     } else {
-      console.log(`网络请求失败:${res.status}`)
+      log(`网络请求失败:${res.status}`)
     }
-
   })
   .catch(function (error) {
     console.log(error);
   });
-
-
-
-function mkdirs(pathname, callback) {
-  // 需要判断是否是绝对路径(避免不必要的bug)
-  pathname = path.isAbsolute(pathname) ? pathname : path.join(__dirname, pathname);
-  // 获取相对路径
-  pathname = path.relative(__dirname, pathname);
-  let floders = pathname.split(path.sep); // path.sep 避免平台差异带来的bug
-  let pre = "";
-  floders.forEach(floder => {
-    try {
-      // 没有异常，文件已经创建，提示用户改文件已经创建
-      let _stat = fs.statSync(path.join(__dirname, pre, floder));
-      let hasMkdir = _stat && _stat.isDirectory();
-      if (hasMkdir) {
-        callback && callback(`文件${floder}已经存在，不能重复创建，请重新创建`);
-      }
-    } catch (error) {
-      // 抛出异常，文件不存在则创建文件
-      try {
-        // 避免父文件还没有创建的时候先创建子文件所出现的意外bug,这里选择同步创建文件
-        fs.mkdirSync(path.join(__dirname, pre, floder));
-        callback && callback(null);
-      } catch (error) {
-        callback && callback(error);
-      }
-    }
-    pre = path.join(pre, floder); // 路径拼合
-    console.log(pre)
-  });
+// makeDir("Data1/Data2/Data3")
+// writeFile("Data1/Data2/Data3/1.js","123")
+function initName(arg){
+  if(isExist(arg,"_")){
+    const argSplit = arg.split("_")
+    sprintNo = argSplit[0]
+    userStoryNo = argSplit[1]
+  }else{
+    sprintNo = arg
+  }
 }
-
-function initDir(pathname,filename,msg) {
-  fs.exists(pathname, function (exists) {
-    // 判断文件夹是否存在
-    //removeDir 如果存在，先对文件夹中的文件进行删除 ，再删除文件夹，最后再新建文件夹，生成文件
-    //makeDir 如果不存在，新建文件夹，生成文件
-    exists ? removeDir(pathname,filename,msg) : makeDir(pathname,filename,msg)
-  })
+function isExist(string,char) {
+  return string.includes(char)
 }
-
-function makeDir(pathname,filename,msg) {
-  fs.mkdir(pathname, function (err) {
-    if (err) {
-      return console.error("文件夹创建失败:" + err)
-    }
-    console.log("文件夹创建成功！")
-    writeFile(filename,msg)
-  })
+function writeFile(filePathName, msg) {
+  try{
+    fs.writeFileSync(filePathName,msg,"utf8")
+    log(`${filePathName} 写入文件成功！`)
+  }catch(err){
+    log(`writeFile() ${err}`)
+  }
+  // 异步
+  // fs.writeFile(filePathName, msg, "utf8", function (err) {
+  //   if (err) {
+  //     console.error("写入文件出错啦！" + err)
+  //   }else{
+  //     console.log("数据写入成功!")
+  //   }
+  // })
 }
-
-function removeDir(pathname,filename,msg) {
-  fs.readdirSync(pathname).map((file) => {
-    fs.unlink(`${pathname}/${file}`, (err) => {
-      if (err) {
-        console.log(`删除文件失败:${err}`);
-      } else {
-        console.log('删除文件成功！');
-        // console.log('\x1b[91m','删除文件成功！')
-      }
-
-      fs.rmdir(pathname, function (err) {
-        if (err) {
-          return console.error("文件夹删除失败:" + err)
-        }
-        console.log("文件夹删除成功！")
-        makeDir(pathname,filename,msg)
-      })
-    });
-  });
+function checkDir(dirPathName) {
+  try {
+    return fs.statSync(dirPathName)
+  } catch (err) {
+    // 如果错误是找不到文件夹 就不log
+    if(err.code!="ENOENT")
+    log(`CheckDir() ${err}`)
+  }
+}
+function makeDir(dirPathName) {
+  let arr = dirPathName.split('/')
+  let dir = arr[0]
+  const dirCache = {}
   
-}
-
-function writeFile(pathname, msg) {
-  fs.writeFile(pathname, msg, "utf8", function (err) {
-    if (err) {
-      console.error("写入文件出错啦！" + err)
+  for (let i = 1; i <= arr.length; i++) {
+    if (!checkDir(dir)) {
+      if (!dirCache[dir] && !fs.existsSync(dir)) {
+        dirCache[dir] = true
+        try{
+          fs.mkdirSync(dir)
+          log(`${dir} 生成文件夹成功！`)
+        }catch(err){
+          log(`makeDir() ${err}`)
+        }
+      }
     }
-    console.log("数据写入成功!"
-    )
-  })
+    dir = dir + '/' + arr[i]
+  }
 }
-// function makeDir(pathname) {
-//   let arr = pathname.split('/')
-//   let dir = arr[0]
-//   const dirCache ={}
-//   for(let i=1;i<=arr.length;i++){
-//     if(!dirCache[dir]&&!fs.existsSync(dir)){
-//       dirCache[dir] = true
-//       fs.mkdirSync(dir)
-//     }
-//     dir = dir+'/'+arr[i]
-//   }
-// }
-// function removeDir(pathname) {
-//   const index = pathname.lastIndexOf("/")
-//   console.log(index)
-// }
-
+function log(msg) {
+  console.log(msg)
+}
