@@ -13,7 +13,5 @@
  - 参考xpath使用注意事项.md
 
 # 准备测试数据及模板
-- cnpm run  prepare S02
-- TODO 读取S02参数
-- 删除文件夹/生成文件夹和文件，数据变换，
-- 
+- 生成U08文件及测试文件 cnpm run prepare S07_U08
+- 生成S07下所有U的文件及测试文件 cnpm run prepare S07

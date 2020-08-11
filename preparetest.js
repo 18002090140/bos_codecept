@@ -9,11 +9,12 @@ const { lastIndexOf } = require("lodash");
 // const cjs = require("./Data1/S07/007")
 // import bossupport from "./codecept.conf";
 // let url = bossupport.backendurl + '/data/007/0'
+const webUrl = "http://120.78.125.187:8888"
 let testUrl = "http://172.22.161.90:8030/bos/check-standard/export/"
 let serverUrl = "http://120.78.125.187:8030/bos/check-standard/export/"
-let allUrl = "http://172.22.161.90:8030/bos/check-standard/export/asd_123"
 const arg = process.argv
 const argUrl = `${serverUrl}/${arg[2]}`
+const dirName = 'Data1'
 let sprintNo
 let userStoryNo
 initName(arg[2])
@@ -26,8 +27,10 @@ axios.get(argUrl, {})
       const response = res.data
       if(typeof(userStoryNo)=="undefined"){
         // S07
-        makeDir(`Data1/${sprintNo}`)
+        makeDir(`${dirName}/${sprintNo}`)
+        // 存储S下的UserStoryName
         const uNameArr = []
+        // 把每个U的验收标准整合到一个对象中
         const uObjArr = {}
         let nameStep = 0
         for(let c=0;c<response.length;c++){
@@ -42,12 +45,14 @@ axios.get(argUrl, {})
           _.assign(uObjArr[userStoryNo],response[c])
         }
         for(let u=0;u<nameStep;u++){
-          writeFile(`Data1/${sprintNo}/${uNameArr[u]}.js`,`module.exports =${initJS(uObjArr[uNameArr[u]])}`)
+          writeFile(`${dirName}/${sprintNo}/${uNameArr[u]}.js`,`module.exports =${initJS(uObjArr[uNameArr[u]])}`)
+          creatTestFile(uNameArr[u])
         }
       }else{
         // S07_U07
-        makeDir(`Data1/${sprintNo}`)
-        writeFile(`Data1/${sprintNo}/${userStoryNo}.js`,`module.exports =${initJS(response,false)}`)
+        makeDir(`${dirName}/${sprintNo}`)
+        writeFile(`${dirName}/${sprintNo}/${userStoryNo}.js`,`module.exports =${initJS(response,false)}`)
+        creatTestFile(userStoryNo)
       }
     } else {
       log(`网络请求失败:${res.status}`)
@@ -113,53 +118,66 @@ function makeDir(dirPathName) {
     dir = dir + '/' + arr[i]
   }
 }
-function initJS(obj,isSprint = true) {
+function initJS(obj, isSprint = true) {
+  // 这里domainModel没有加到新的对象里
+  
   var userObj = Object()
   var sunObj = Object()
-  if(isSprint){
+  if (isSprint) {
     // 抽出用户故事
     userObj = obj.userStory
     // 测试用例 数组变对象
     var parentObj = Object()
-      var childObj =Object()
-      childObj.name = obj.name
-      childObj.number = obj.number
-      childObj.represent = obj.represent
-      for(let t=0;t<obj.testDataSet.length;t++){
-        var tparentObj = Object()
-        var tchildObj =Object()
-        tchildObj.number = obj.testDataSet[t].number
-        tchildObj.data = obj.testDataSet[t].dataJson
-        tparentObj[obj.testDataSet[t].number] = tchildObj
-        _.assign(childObj,tparentObj)
-      }
-      parentObj[obj.number] = childObj
-      _.assign(sunObj,parentObj)
-  }else{
+    var childObj = Object()
+    childObj.name = obj.name
+    childObj.number = obj.number
+    childObj.represent = obj.represent
+    for (let t = 0; t < obj.testDataSet.length; t++) {
+      var tparentObj = Object()
+      var tchildObj = Object()
+      tchildObj.number = obj.testDataSet[t].number
+      tchildObj.data = obj.testDataSet[t].dataJson
+      tparentObj[obj.testDataSet[t].number] = tchildObj
+      _.assign(childObj, tparentObj)
+    }
+    parentObj[obj.number] = childObj
+    _.assign(sunObj, parentObj)
+  } else {
     userObj = obj[0].userStory
 
-    for(let c=0;c<obj.length;c++){
+    for (let c = 0; c < obj.length; c++) {
       var parentObj = Object()
-      var childObj =Object()
+      var childObj = Object()
       childObj.name = obj[c].name
       childObj.number = obj[c].number
       childObj.represent = obj[c].represent
-      for(let t=0;t<obj[c].testDataSet.length;t++){
+      for (let t = 0; t < obj[c].testDataSet.length; t++) {
         var tparentObj = Object()
-        var tchildObj =Object()
+        var tchildObj = Object()
         tchildObj.number = obj[c].testDataSet[t].number
         tchildObj.data = obj[c].testDataSet[t].dataJson
         tparentObj[obj[c].testDataSet[t].number] = tchildObj
-        _.assign(childObj,tparentObj)
+        _.assign(childObj, tparentObj)
       }
       parentObj[obj[c].number] = childObj
-      _.assign(sunObj,parentObj)
+      _.assign(sunObj, parentObj)
     }
   }
   // log(sunObj)
   let data = _.assign(userObj, sunObj)
-  data =JSON.stringify(data, "", "\t")
+  data = JSON.stringify(data, "", "\t") //[object String]
   return data
+}
+function creatTestFile(userStoryFileName) {
+  const fileMsg = `const qclocator = require('./qclocator');
+const webUrl = "${webUrl}";
+let data=require("./${dirName}/${sprintNo}/${userStoryFileName}.js");
+
+Feature("【用户故事名称】填这");
+Scenario("【验收标准名称】填这",(I) => {
+
+})`
+  writeFile(`${userStoryFileName}_test.js`, fileMsg)
 }
 function log(msg) {
   console.log(msg)
