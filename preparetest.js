@@ -6,11 +6,12 @@ const fs = require("fs");
 const path = require("path");
 const { dir } = require("console");
 const { lastIndexOf } = require("lodash");
-// const cjs = require("./Data1/S07/007")
+// const cjs = require("./Data1/have_data")
+// const testData = require("./Data1/test_data")
 // import bossupport from "./codecept.conf";
 // let url = bossupport.backendurl + '/data/007/0'
 const webUrl = "http://120.78.125.187:8888"
-let testUrl = "http://172.22.161.90:8030/bos/check-standard/export/"
+let zeroTierUrl = "http://172.22.161.90:8030/bos/check-standard/export/"
 let serverUrl = "http://120.78.125.187:8030/bos/check-standard/export/"
 const arg = process.argv
 const argUrl = `${serverUrl}/${arg[2]}`
@@ -24,8 +25,8 @@ axios.get(argUrl, {})
     if (res.status == 200) {
       log(`网络请求成功:${res.status}`);
       // log(Object.prototype.toString.call(res.data))
-      const response = res.data
-      if(typeof(userStoryNo)=="undefined"){
+      const response = initResponse(res.data)
+      if (typeof (userStoryNo) == "undefined") {
         // S07
         makeDir(`${dirName}/${sprintNo}`)
         // 存储S下的UserStoryName
@@ -33,25 +34,25 @@ axios.get(argUrl, {})
         // 把每个U的验收标准整合到一个对象中
         const uObjArr = {}
         let nameStep = 0
-        for(let c=0;c<response.length;c++){
+        for (let c = 0; c < response.length; c++) {
           const userStoryNo = response[c].userStory.number
-          if(_.indexOf(uNameArr,userStoryNo)==-1){
+          if (_.indexOf(uNameArr, userStoryNo) == -1) {
             uNameArr[nameStep] = userStoryNo
             nameStep++
           }
-          if(typeof(uObjArr[userStoryNo])=="undefined"){
+          if (typeof (uObjArr[userStoryNo]) == "undefined") {
             uObjArr[userStoryNo] = Object()
           }
-          _.assign(uObjArr[userStoryNo],response[c])
+          _.assign(uObjArr[userStoryNo], response[c])
         }
-        for(let u=0;u<nameStep;u++){
-          writeFile(`${dirName}/${sprintNo}/${uNameArr[u]}.js`,`module.exports =${initJS(uObjArr[uNameArr[u]])}`)
+        for (let u = 0; u < nameStep; u++) {
+          writeFile(`${dirName}/${sprintNo}/${uNameArr[u]}.js`, `module.exports =${initJS(uObjArr[uNameArr[u]])}`)
           creatTestFile(uNameArr[u])
         }
-      }else{
+      } else {
         // S07_U07
         makeDir(`${dirName}/${sprintNo}`)
-        writeFile(`${dirName}/${sprintNo}/${userStoryNo}.js`,`module.exports =${initJS(response,false)}`)
+        writeFile(`${dirName}/${sprintNo}/${userStoryNo}.js`, `module.exports =${initJS(response, false)}`)
         creatTestFile(userStoryNo)
       }
     } else {
@@ -118,11 +119,21 @@ function makeDir(dirPathName) {
     dir = dir + '/' + arr[i]
   }
 }
+function initResponse(response) {
+  let str = JSON.stringify(response,"","\t")
+  while(str.search(/\(.+\)/)!=-1){
+    str = str.replace(/\(.+\)/,"")
+  }
+  let obj = JSON.parse(str)
+  return obj
+}
 function initJS(obj, isSprint = true) {
   // 这里domainModel没有加到新的对象里
-  
+
   var userObj = Object()
   var sunObj = Object()
+  // 注释的数量
+  let noteNum = 0
   if (isSprint) {
     // 抽出用户故事
     userObj = obj.userStory
@@ -133,10 +144,41 @@ function initJS(obj, isSprint = true) {
     childObj.number = obj.number
     childObj.represent = obj.represent
     for (let t = 0; t < obj.testDataSet.length; t++) {
+      //添加注释
+      let noteArr = obj.testDataSet[t].domainModel.propertySet
+      let noteNameObj = Object()
+      for (let n = 0; n < noteArr.length; n++) {
+        //(${noteArr[n].chineseName})
+        noteNameObj[`${noteArr[n].name}`] = `//${noteArr[n].chineseName}///${noteArr[n].name}`
+      }
+      // log(noteNameObj)
+      let dataObj = obj.testDataSet[t].dataJson
+      for (let key in dataObj) {
+        // log(`key: ${key} noteNameObj: ${noteNameObj[key]}`)
+        if (key == "propertySet") {
+          let pro = dataObj[key]
+          for (let key in pro) {
+            if (typeof (noteNameObj[key]) != "undefined") {
+              let newKey = noteNameObj[key]
+              pro[newKey] = pro[key]
+              delete pro[key]
+              noteNum++
+            }
+          }
+          dataObj[key] = pro
+        }
+        if (typeof (noteNameObj[key]) != "undefined") {
+          let newKey = noteNameObj[key]
+          dataObj[newKey] = dataObj[key]
+          delete dataObj[key]
+          noteNum++
+        }
+      }
+      //将除了 U的剩余内容整合
       var tparentObj = Object()
       var tchildObj = Object()
       tchildObj.number = obj.testDataSet[t].number
-      tchildObj.data = obj.testDataSet[t].dataJson
+      tchildObj.data = dataObj
       tparentObj[obj.testDataSet[t].number] = tchildObj
       _.assign(childObj, tparentObj)
     }
@@ -152,6 +194,36 @@ function initJS(obj, isSprint = true) {
       childObj.number = obj[c].number
       childObj.represent = obj[c].represent
       for (let t = 0; t < obj[c].testDataSet.length; t++) {
+        //添加注释
+        let noteArr = obj[c].testDataSet[t].domainModel.propertySet
+        let noteNameObj = Object()
+        for (let n = 0; n < noteArr.length; n++) {
+          noteNameObj[`${noteArr[n].name}`] = `//${noteArr[n].chineseName}///${noteArr[n].name}`
+        }
+        // log(noteNameObj)
+        let dataObj = obj[c].testDataSet[t].dataJson
+        for (let key in dataObj) {
+          // log(`key: ${key} noteNameObj: ${noteNameObj[key]}`)
+          if (key == "propertySet") {
+            let pro = dataObj[key]
+            for (let key in pro) {
+              if (typeof (noteNameObj[key]) != "undefined") {
+                let newKey = noteNameObj[key]
+                pro[newKey] = pro[key]
+                delete pro[key]
+                noteNum++
+              }
+            }
+            dataObj[key] = pro
+          }
+          if (typeof (noteNameObj[key]) != "undefined") {
+            let newKey = noteNameObj[key]
+            dataObj[newKey] = dataObj[key]
+            delete dataObj[key]
+            noteNum++
+          }
+        }
+        //将除了 U的剩余内容整合  
         var tparentObj = Object()
         var tchildObj = Object()
         tchildObj.number = obj[c].testDataSet[t].number
@@ -166,16 +238,23 @@ function initJS(obj, isSprint = true) {
   // log(sunObj)
   let data = _.assign(userObj, sunObj)
   data = JSON.stringify(data, "", "\t") //[object String]
+  for (let i = 0; i < noteNum; i++) {
+    data = data.replace('"//', "/*");
+    data = data.replace('///', '*/"');
+  }
+
   return data
 }
+// 生成测试JS文件
 function creatTestFile(userStoryFileName) {
   const fileMsg = `const qclocator = require('./qclocator');
-const webUrl = "${webUrl}";
 let data=require("./${dirName}/${sprintNo}/${userStoryFileName}.js");
+const webUrl = "${webUrl}";
+const baseUrl = webUrl
 
 Feature("【用户故事名称】填这");
 Scenario("【验收标准名称】填这",(I) => {
-
+\t
 })`
   writeFile(`${userStoryFileName}_test.js`, fileMsg)
 }
