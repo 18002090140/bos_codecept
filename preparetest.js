@@ -8,8 +8,6 @@ const { dir } = require("console");
 const { lastIndexOf } = require("lodash");
 // const cjs = require("./Data1/have_data")
 // const testData = require("./Data1/test_data")
-// import bossupport from "./codecept.conf";
-// let url = bossupport.backendurl + '/data/007/0'
 const webUrl = "http://120.78.125.187:8888"
 let zeroTierUrl = "http://172.22.161.90:8030/bos/check-standard/export/"
 let serverUrl = "http://120.78.125.187:8030/bos/check-standard/export/"
@@ -242,7 +240,6 @@ function initJS(obj, isSprint = true) {
     data = data.replace('"//', "/*");
     data = data.replace('///', '*/"');
   }
-
   return data
 }
 // 生成测试JS文件
