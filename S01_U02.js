@@ -4,9 +4,10 @@ Feature('qwe');
 
 Scenario('asdsd', (I) => {
 
+    user={username:1,password:1}
     I.amOnPage(baseurl+'/#/login')
-    I.fillField(qclocator.inputWithplaceHolder('请输入账号'),1)
-    I.fillField(qclocator.inputWithplaceHolder('请输入密码'),1)
+    I.fillField(qclocator.inputWithplaceHolder('请输入账号'),user.username)
+    I.fillField(qclocator.inputWithplaceHolder('请输入密码'),user.password)
     I.click('登录')
     /*
     I.click('//li[@data-test="装备出入库"]')
