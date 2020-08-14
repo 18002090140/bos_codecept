@@ -23,7 +23,7 @@ function inputWithplaceHolder(propertyLabel){
 }
 
 function entitySelectorWithLabel(propertyLabel){
-	return `//div[@data-label="${propertyLabel}"]//i[contains(@class,'icon-sousuo')]`;
+	return `//div[@data-label="${propertyLabel}"]//i[contains(@class,'el-icon-search')]`;
 }
 
 function popupWindowWithTitle(propertyLabel){
