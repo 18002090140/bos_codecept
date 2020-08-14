@@ -1,5 +1,5 @@
 exports.bossupport={
-  backendurl:"http://192.168.1.139"
+  backendurl:"http://172.22.161.90:8030/bos/test-data/export"
 };
 
 exports.config = {
