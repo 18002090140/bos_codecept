@@ -13,7 +13,13 @@ function rowWithText(text) {
 function inputWithLabel(propertyLabel){
 	const prefix=`//div[@data-label="${propertyLabel}"]`;
 	//TODO 有待扩展到其他输入框
-	return "("+prefix+"//input[@type='text']" +" | "+prefix+"//textarea"+")";
+	return "("+prefix+"//input[@type='text']" +" | "+prefix+"//textarea"+ " | " +prefix+"//input[@type='password']" +")";
+}
+
+function inputWithplaceHolder(propertyLabel){
+	const prefix=`//div[@data-input-container='entity-input-container']`;
+	//TODO 有待扩展到其他输入框
+	return "("+prefix+`//input[@placeholder="${propertyLabel}"]` +" | "+prefix+"//textarea"+")";
 }
 
 function entitySelectorWithLabel(propertyLabel){
@@ -29,5 +35,5 @@ function fieldWithLabel(propertyLabel){
 }
 
 module.exports = {
-	rowWithText,inputWithLabel,entitySelectorWithLabel,popupWindowWithTitle,fieldWithLabel
+	rowWithText,inputWithLabel,entitySelectorWithLabel,popupWindowWithTitle,fieldWithLabel,inputWithplaceHolder
 }

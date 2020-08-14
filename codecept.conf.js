@@ -10,8 +10,8 @@ exports.config = {
         show: true,
         windowSize: '1920x1080',
         chrome: {
-          //当windows系统时，让下面这句话有效，而且对用到你自己的chrome目录
-          //executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+          // 当windows系统时，让下面这句话有效，而且对用到你自己的chrome目录
+          executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
         }
         
       }
