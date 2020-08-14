@@ -27,7 +27,7 @@ function entitySelectorWithLabel(propertyLabel){
 }
 
 function popupWindowWithTitle(propertyLabel){
-	return `//div[@data-title="${propertyLabel}"]`;
+	return `//div[@aria-label="${propertyLabel}"]`;
 }
 
 function fieldWithLabel(propertyLabel){
