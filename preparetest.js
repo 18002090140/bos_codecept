@@ -246,7 +246,7 @@ function initJS(obj, isSprint = true) {
 function creatTestFile(userStoryFileName) {
   makeDir("Data1/Test")
   const fileMsg = `const qclocator = require('./qclocator');
-let data=require("Data1/${dirName}/${sprintNo}/${userStoryFileName}.js");
+let data=require("${dirName}/${sprintNo}/${userStoryFileName}.js");
 const webUrl = "${webUrl}";
 const baseUrl = webUrl
 
@@ -254,7 +254,7 @@ Feature("【用户故事名称】填这");
 Scenario("【验收标准名称】填这",(I) => {
 \t
 })`
-  writeFile(`Data1/Test/${sprintNo}_${userStoryFileName}_test.js`, fileMsg)
+  writeFile(`${dirName}/Test/${sprintNo}_${userStoryFileName}_test.js`, fileMsg)
 }
 function log(msg) {
   console.log(msg)
