@@ -23,17 +23,25 @@ function inputWithplaceHolder(propertyLabel){
 }
 
 function entitySelectorWithLabel(propertyLabel){
-	return `//div[@data-label="${propertyLabel}"]//i[contains(@class,'el-icon-search')]`;
+	return `//div[@data-label="${propertyLabel}"]//i[contains(@class,'iconfont iconxuanze')]`;
 }
 
 function popupWindowWithTitle(propertyLabel){
 	return `//div[@aria-label="${propertyLabel}"]`;
 }
 
+function buttonWithName(propertyLabel){
+	return `//button[@name='${propertyLabel}']`;
+}
+
 function fieldWithLabel(propertyLabel){
 	return `//div[@data-label="${propertyLabel}"]`;
 }
 
+function liWithLabelAndName(label,name){
+	return `//div[@data-label="${label}"]//li[@name="${name}"]`
+}
+
 module.exports = {
-	rowWithText,inputWithLabel,entitySelectorWithLabel,popupWindowWithTitle,fieldWithLabel,inputWithplaceHolder
+	rowWithText,inputWithLabel,entitySelectorWithLabel,popupWindowWithTitle,fieldWithLabel,inputWithplaceHolder,buttonWithName,liWithLabelAndName
 }
