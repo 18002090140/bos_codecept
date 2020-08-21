@@ -1,18 +1,20 @@
 exports.bossupport={
   backendurl:"http://172.22.161.90:8030/bos/test-data/export"
 };
-
+const { setWindowSize } = require('@codeceptjs/configure');
+setWindowSize(1540,820)
 exports.config = {
     output: './output',
     helpers: {
       Puppeteer: {
         url: 'http://120.78.125.187:8888',
         show: true,
-        windowSize: '1920x1080',
+        // windowSize: '1400x800',
         chrome: {
           // 当windows系统时，让下面这句话有效，而且对用到你自己的chrome目录
           executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-        }
+        },
+        waitForAction: 500
         
       }
     },
