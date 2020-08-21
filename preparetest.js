@@ -23,7 +23,7 @@ axios.get(argUrl, {})
     if (res.status == 200) {
       log(`网络请求成功:${res.status}`);
       // log(Object.prototype.toString.call(res.data))
-      const response = initResponse(res.data)
+      const response = res.data
       if (typeof (userStoryNo) == "undefined") {
         // S07
         makeDir(`${dirName}/${sprintNo}`)
@@ -244,8 +244,9 @@ function initJS(obj, isSprint = true) {
 }
 // 生成测试JS文件
 function creatTestFile(userStoryFileName) {
+  makeDir("Data1/Test")
   const fileMsg = `const qclocator = require('./qclocator');
-let data=require("./${dirName}/${sprintNo}/${userStoryFileName}.js");
+let data=require("${dirName}/${sprintNo}/${userStoryFileName}.js");
 const webUrl = "${webUrl}";
 const baseUrl = webUrl
 
@@ -253,7 +254,7 @@ Feature("【用户故事名称】填这");
 Scenario("【验收标准名称】填这",(I) => {
 \t
 })`
-  writeFile(`${userStoryFileName}_test.js`, fileMsg)
+  writeFile(`${dirName}/Test/${sprintNo}_${userStoryFileName}_test.js`, fileMsg)
 }
 function log(msg) {
   console.log(msg)
