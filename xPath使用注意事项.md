@@ -1,20 +1,36 @@
-## 可能遇到的错误以及解决办法
-  Could not find browser revision 782078. Run "PU----"
-	该错误表示找不到浏览器的方式，自己手动配置浏览器启动路径即可解决：
-	找到当前目录下的 codecept.conf.js 在Puppeteer里新增属性如下
-  ```js 
-  chrome: {
-    executablePath: "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe
-     	 }
-	
-	executablePath里填的是浏览器的启动方式路径 根据自己电脑上的路径配置即可
-  ```
-## XPath 语法
-  https://www.w3school.com.cn/xpath/xpath_syntax.asp
 
+## XPath 语法
+  - https://developer.mozilla.org/zh-CN/docs/Web/XPath
+  - https://www.w3school.com.cn/xpath/xpath_syntax.asp
+  - https://www.w3.org/TR/xpath
+  - 轴axes/函数function/
+
+  
 ## 其他连接
 ### XPath中的text()和string()区别 https://blog.csdn.net/jiangchao858/article/details/63314426
 ### Xpath cheatsheet https://devhints.io/xpath  
+
+
+## xpath的三大场景
+- 在某个范围里A找符合某条件的节点B：采用A//B
+- 在某个表格中，选择某列内容满足某个条件A的那一行（见下述‘常见的translate与contains函数'中的例子）
+- 所有满足某个条件的节点中，选取与某个节点具有最近的共同祖先节点的那个。
+
+
+# position()与count(./preceding-sibling::*)
+- position仅仅是在选出来的所有节点里（context）应用序号，类似于下标。
+- 而count(./preceding-sibling::*)显然是指当前节点在原来的上下文中是第N个节点（n=1,2,3....)。
+
+# 常见的translate与contains函数
+- translate用来做替换，而contains做包含判定，下面所说的是在所有包含‘管理员登陆’的单元格中，选出属于“中文名”这一列，所在的那些行。
+- //td[contains(text(),’管理员登录’)]/ancestor::tr[position()=count(//table[@class='el-table__header'][1]//th[contains(translate(., ' ', ''),'中文名')]/preceding-sibling::*)]
+
+
+# 节点集合的操作 ｜ 
+-
+
+
+
 
 ## 基本操作
 
