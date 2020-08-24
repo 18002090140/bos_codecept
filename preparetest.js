@@ -246,7 +246,7 @@ function initJS(obj, isSprint = true) {
 function creatTestFile(userStoryFileName) {
   makeDir("Data1/Test")
   const fileMsg = `const qclocator = require('./qclocator');
-let data=require("${dirName}/${sprintNo}/${userStoryFileName}.js");
+let data=require("./${dirName}/${sprintNo}/${userStoryFileName}.js");
 const webUrl = "${webUrl}";
 const baseUrl = webUrl
 
