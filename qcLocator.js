@@ -17,7 +17,7 @@ function inputWithLabel(propertyLabel){
 }
 
 function inputWithplaceHolder(propertyLabel){
-	const prefix=`//div[@data-input-container='entity-input-container']`;
+	const prefix=`//div[@class="define-input-container border"]`;
 	//TODO 有待扩展到其他输入框
 	return "("+prefix+`//input[@placeholder="${propertyLabel}"]` +" | "+prefix+"//textarea"+")";
 }
@@ -42,6 +42,10 @@ function liWithLabelAndName(label,name){
 	return `//div[@data-label="${label}"]//li[@name="${name}"]`
 }
 
+function rowWithCellTextInColumn(cellText,ColumnHeaderText){
+	return `//div[contains(@class,"el-table__body-wrapper")]/table//td[string()="${cellText}"][count(./preceding-sibling::*)=count(//div[@class="el-table__header-wrapper"]/table//th[contains(.,'${ColumnHeaderText}')]/preceding-sibling::*)]/parent::tr`;
+}
+
 module.exports = {
-	rowWithText,inputWithLabel,entitySelectorWithLabel,popupWindowWithTitle,fieldWithLabel,inputWithplaceHolder,buttonWithName,liWithLabelAndName
+	rowWithText,inputWithLabel,entitySelectorWithLabel,rowWithCellTextInColumn,popupWindowWithTitle,fieldWithLabel,inputWithplaceHolder,buttonWithName,liWithLabelAndName
 }

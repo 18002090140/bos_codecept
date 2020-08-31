@@ -7,7 +7,7 @@ Before((I) => { // or Background
     I.loginAsAdmin();
 });
 
-Scenario('asdsd', (I) => {
+xScenario('asdsd', (I) => {
 
     I.b_clickMenuItem("人员管理","库房管理");//扩展行为
     I.click('新增人员')
@@ -26,7 +26,7 @@ Scenario('asdsd', (I) => {
     I
 })
 
-Scenario('asdsd', (I) => {
+xScenario('asdsd', (I) => {
     I.b_clickMenuItem("供应商管理","装备出入库");
     I.click('新增供应商')
     I.fillField(qclocator.inputWithLabel('供应商'),1111)
@@ -37,7 +37,7 @@ Scenario('asdsd', (I) => {
 
 })
 
-Scenario('asdsd', (I) => {   
+xScenario('asdsd', (I) => {   
     I.b_clickMenuItem("装备参数列表","装备出入库");
     I.click('新增装备参数')
     I.fillField(qclocator.inputWithLabel('装备名称'),1)
@@ -67,10 +67,10 @@ Scenario('asdsd', (I) => {
     I.wait(1)
     I.fillField('//div[@data-label="单价"]//input[1]',111)
     I.click('//div[@data-label="生产日期"]//input[1]')
-    I.click('此刻')    
-    I.b_selectOption("硬件选择","手持机");
-    I.click('读取数据')
-    I.wait(1)
-    I.click('//div[@data-label="明细"]')
+    // I.click('此刻')    
+    // I.b_selectOption("硬件选择","手持机");
+    // I.click('读取数据')
+    // I.wait(1)
+    // I.click('//div[@data-label="明细"]')
 });
 

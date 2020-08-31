@@ -42,18 +42,23 @@ Scenario('asdsd', (I) => {
     I.click('//a[@data-test="装备参数列表"]')
     I.wait(1)
     I.click('新增装备参数')
-    I.fillField(qclocator.inputWithLabel('装备名称'),1)
-    I.fillField(qclocator.inputWithLabel('装备型号'),2)
+    I.fillField(qclocator.inputWithLabel('装备名称'),'镭射枪17')
+    I.fillField(qclocator.inputWithLabel('装备型号'),'SLQ-9568')
     I.click(qclocator.entitySelectorWithLabel('供应商')) // entity組件剥离有问题，直接修改原组件
-    I.click(qclocator.rowWithText('1'))
+    // I.click(qclocator.rowWithText('1'))
+    I.selectTableRowWithCellTextInColumn('中国石油','供应商名称')
     I.click("确定",qclocator.popupWindowWithTitle("供应商选择"));  // servicelog组件剥离有问题，直接修改原组件
     I.fillField(qclocator.inputWithLabel('质保期（天）'),4)
     I.fillField(qclocator.inputWithLabel('充电周期（天）'),5)
     I.fillField(qclocator.inputWithLabel('保养周期（天）'),6)
-    I.attachFile('//div[@data-label="上传"]//input[@type="file"]','Data/vue.jpg')
+    I.attachFile('//div[@data-label="上传"]//input[@type="file"]','Data1/vue.jpg')
     I.click('提交')
-    pause()
+    I.see('新增装备参数成功')
+    I.wait(1)
+    I.click("//i[@class=' iconfont iconbianji']",qclocator.rowWithCellTextInColumn('SLQ-9568','装备型号'))
 
+    // pause()
+    // I.selectTableRowWithCellTextInColumn("1111","供应商名称","//div[@aria-label='供应商选择']");
     // I.click(qclocator.rowWithText(data.UserStory.name),qclocator.popupWindowWithTitle("用户故事选择"));
     // I.click("确定",qclocator.popupWindowWithTitle("用户故事选择"));  
     

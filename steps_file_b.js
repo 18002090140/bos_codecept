@@ -1,5 +1,6 @@
 // in this file you can append custom step methods to 'I' object
 const qclocator = require('./qclocator');
+const qcLocatorOld = require('./qcLocator-old');
 const baseurl="http://localhost:8088";
 module.exports = {
     loginAsAdmin:function(){
@@ -40,8 +41,11 @@ module.exports = {
       this.click(`//div[@data-label="${labelName}"]//li[contains(text(),'${optionSelect}')]`);
 
     }
+    ,b_selectTableRowWithText:function(x,y){
+      this.click(`//div[@class="el-table__body-wrapper is-scrolling-none"]/table/tbody/tr/td[contains(@rowspan,'0') and contains(@colspan,'0') ]`)
+    }
     ,selectTableRowWithCellTextInColumn:function(cellText,ColumnHeaderText,locator){
-      this.click((!!locator?locator:"")+`//div[contains(@class,"el-table__body-wrapper")]/table//td[string()="${cellText}"][count(./preceding-sibling::*)=count(//div[@class="el-table__header-wrapper"]/table//th[contains(.,'${ColumnHeaderText}')]/preceding-sibling::*)]/parent::tr`);
+      this.click((!!locator?locator:"")+qclocator.rowWithCellTextInColumn(cellText,ColumnHeaderText));
     },
 
     // Define custom steps here, use 'this' to access default methods of I.
