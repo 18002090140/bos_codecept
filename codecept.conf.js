@@ -35,6 +35,9 @@ exports.config = {
       },
       retryFailedStep: {
         enabled: true
+      },
+      allure:{
+        enabled: true
       }
     },
     tests: './*_test.js',
