@@ -1,0 +1,83 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1605179455618' stop='1605179477120'>
+    <name>qwe:</name>
+    <title>qwe:</title>
+    <test-cases>
+        <test-case start='1605179455618' status='failed' stop='1605179472336'>
+            <name>装备入库操作</name>
+            <title>装备入库操作</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1605179463473' status='passed' stop='1605179466542'>
+                    <name>Object: b_clickMenuItem </name>
+                    <title>Object: b_clickMenuItem </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1605179463473' status='passed' stop='1605179464013'>
+                            <name>我 单击 "//ul[@role="menubar"]//li[@data-test="装备出入库"]"</name>
+                            <title>我 单击 "//ul[@role="menubar"]//li[@data-test="装备出入库"]"</title>
+                            <attachments/>
+                            <steps/>
+                        </step>
+                        <step start='1605179464013' status='passed' stop='1605179465013'>
+                            <name>我 等 1</name>
+                            <title>我 等 1</title>
+                            <attachments/>
+                            <steps/>
+                        </step>
+                        <step start='1605179465013' status='passed' stop='1605179465541'>
+                            <name>我 单击 "//ul[@role="menubar"]//li[@data-test="入库单列表"] | //ul[@role="menubar"]//a[@data-test="入库单列表"]"</name>
+                            <title>我 单击 "//ul[@role="menubar"]//li[@data-test="入库单列表"] | //ul[@role="menubar"]//a[@data-test="入库单列表"]"</title>
+                            <attachments/>
+                            <steps/>
+                        </step>
+                        <step start='1605179465541' status='passed' stop='1605179466542'>
+                            <name>我 等 1</name>
+                            <title>我 等 1</title>
+                            <attachments/>
+                            <steps/>
+                        </step>
+                    </steps>
+                </step>
+                <step start='1605179466542' status='passed' stop='1605179467105'>
+                    <name>我 单击 "入库装备"</name>
+                    <title>我 单击 "入库装备"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1605179467105' status='passed' stop='1605179467664'>
+                    <name>我 单击 "//div[@data-label="装备参数"]//i[contains(@class,'iconfont iconxuanze')]"</name>
+                    <title>我 单击 "//div[@data-label="装备参数"]//i[contains(@class,'iconfont iconxuanze')]"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1605179467664' status='failed' stop='1605179472336'>
+                    <name>Object: selectTableRowWithCellTextInColumn </name>
+                    <title>Object: selectTableRowWithCellTextInColumn </title>
+                    <attachments/>
+                    <steps>
+                        <step start='1605179467664' status='failed' stop='1605179472335'>
+                            <name>我 单击 "//div[contains(@class,"el-table__body-wrapper")]/table//td[string()="灭火器"][count(./preceding-sibling::*)=count(//div[@class="el-table__header-wrapper"]/table//th[contains(.,'装备名称')]/preceding-sibling::*)]/parent::tr"</name>
+                            <title>我 单击 "//div[contains(@class,"el-table__body-wrapper")]/table//td[string()="灭火器"][count(./preceding-sibling::*)=count(//div[@class="el-table__header-wrapper"]/table//th[contains(.,'装备名称')]/preceding-sibling::*)]/parent::tr"</title>
+                            <attachments/>
+                            <steps/>
+                        </step>
+                    </steps>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='0e2d0a22-fc2f-43a5-9c63-2d8de2ead779-attachment.png' type='image/png' size='75015'/>
+            </attachments>
+            <failure>
+                <message>Clickable element "//div[contains(@class,"el-table__body-wrapper")]/table//td[string()="灭火器"][count(./preceding-sibling::*)=count(//div[@class="el-table__header-wrapper"]/table//th[contains(.,'装备名称')]/preceding-sibling::*)]/parent::tr" was not found by text|CSS|XPath</message>
+                <stack-trace>Error: Clickable element "//div[contains(@class,"el-table__body-wrapper")]/table//td[string()="灭火器"][count(./preceding-sibling::*)=count(//div[@class="el-table__header-wrapper"]/table//th[contains(.,'装备名称')]/preceding-sibling::*)]/parent::tr" was not found by text|CSS|XPath
+                    at new ElementNotFound (D:\暑期实践\bos_codecept\node_modules\codeceptjs\lib\helper\errors\ElementNotFound.js:14:11)
+                    at assertElementExists (D:\暑期实践\bos_codecept\node_modules\codeceptjs\lib\helper\Puppeteer.js:2408:11)
+                    at Puppeteer.proceedClick (D:\暑期实践\bos_codecept\node_modules\codeceptjs\lib\helper\Puppeteer.js:2172:5)
+                    at runMicrotasks (&lt;anonymous>)
+                    at processTicksAndRejections (internal/process/task_queues.js:93:5)</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

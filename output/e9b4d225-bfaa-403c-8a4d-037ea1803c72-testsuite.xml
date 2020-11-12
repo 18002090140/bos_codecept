@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1605179439459' stop='1605179450689'>
+    <name>我在百度:</name>
+    <title>我在百度:</title>
+    <test-cases>
+        <test-case start='1605179439459' status='failed' stop='1605179448850'>
+            <name>百度验收标准</name>
+            <title>百度验收标准</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1605179440409' status='passed' stop='1605179444179'>
+                    <name>我 在页面 "https://www.baidu.com/"</name>
+                    <title>我 在页面 "https://www.baidu.com/"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+                <step start='1605179444179' status='failed' stop='1605179448849'>
+                    <name>我 看到 "动感超人"</name>
+                    <title>我 看到 "动感超人"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title='Last Seen Screenshot' source='36cedc2c-e793-482b-bd0b-20e12d4649a1-attachment.png' type='image/png' size='55476'/>
+            </attachments>
+            <failure>
+                <message></message>
+                <stack-trace>undefined</stack-trace>
+            </failure>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

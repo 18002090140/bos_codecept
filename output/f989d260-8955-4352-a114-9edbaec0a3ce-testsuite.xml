@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<ns2:test-suite xmlns:ns2='urn:model.allure.qatools.yandex.ru' start='1605179450692' stop='1605179455604'>
+    <name>我在百度:</name>
+    <title>我在百度:</title>
+    <test-cases>
+        <test-case start='1605179450692' status='passed' stop='1605179455435'>
+            <name>百度验收标准</name>
+            <title>百度验收标准</title>
+            <labels/>
+            <parameters/>
+            <steps>
+                <step start='1605179451638' status='passed' stop='1605179455435'>
+                    <name>我 在页面 "https://www.baidu.com/"</name>
+                    <title>我 在页面 "https://www.baidu.com/"</title>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
+            <attachments/>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>
