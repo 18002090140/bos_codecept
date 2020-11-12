@@ -21,7 +21,8 @@ Scenario(data.C01.represent, (I) => {
     I.fillField(qclocator.inputWithLabel('密码'),u1.password)
     I.attachFile('//div[@data-label="上传"]//input[@type="file"]','Data/vue.jpg')//TODO 图片问题有待解决，行为有待扩展
     I.click(qclocator.buttonWithName('提交'))
-    I.selectTableRowWithCellTextInColumn(u1.police_sign,"警号");
+    
+    I.selectTableRowWithCellTextInColumn(Date.parse(new Date()),"警号");
 })
 
 Scenario(data.C02.represent, (I) => {

@@ -3,6 +3,8 @@
 ## cnpm install
 ## 调整参数设置：a.包括codecept.config.js中的chrome位置.b.baseurl设定
 ## 运行测试代码 npx codeceptjs run --verbose  //--verbose是显示详细信息，可以去掉
+## npx codeceptjs run --plugins allure
+## allure serve output
 - https://codecept.io/quickstart/
 ## 如需编写额外的验收测试代码 
 - 则首先生成用户故事或验收标准的数据文件，放到/Data/文件夹中
@@ -29,3 +31,7 @@
 	
 	executablePath里填的是浏览器的启动方式路径 根据自己电脑上的路径配置即可
   ```
+
+  不同的电脑的分辨率也不一样 如果想要调整自动化窗口的分辨率 
+	找到当前目录下的 codecept.conf.js
+  setWindowSize(1500,800) 改动该方法的参数即可。
