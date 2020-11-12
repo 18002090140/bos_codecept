@@ -2,7 +2,7 @@ exports.bossupport={
   backendurl:"http://172.22.161.90:8030/bos/test-data/export"
 };
 const { setWindowSize } = require('@codeceptjs/configure');
-setWindowSize(1540,820)
+setWindowSize(1500,800)
 exports.config = {
     output: './output',
     helpers: {

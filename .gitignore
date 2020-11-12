@@ -2,8 +2,8 @@
 ~*
 node_modules
 *.swap
-/output
-/Data
+# /output
+# /Data
 
 package-lock.json
 userstory_test.js
